@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 3 - Advanced Styling and JS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background: #f4f4f4;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    section {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    img {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 15px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 1024px) {
+      body {
+        font-size: 16px;
+        padding: 15px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      body {
+        font-size: 18px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Advanced Styling and JavaScript</h1>
+
+  <section>
+    <h2>Responsive Quiz</h2>
+    <div id="quiz">
+      <p>What is the capital of France?</p>
+      <input type="radio" name="q1" value="Paris"> Paris<br>
+      <input type="radio" name="q1" value="London"> London<br>
+      <input type="radio" name="q1" value="Berlin"> Berlin<br>
+    </div>
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="result"></p>
+  </section>
+
+  <section>
+    <h2>Image Carousel</h2>
+    <img id="carousel" src="https://apexplanet.in/wp-content/uploads/2023/08/apspl9-1024x381.png.webp" />
+    <br>
+    <button onclick="nextImage()">Next Image</button>
+  </section>
+
+  <section>
+    <h2>Get a Random Joke</h2>
+    <button onclick="getJoke()">Get Joke</button>
+    <p id="jokeText"></p>
+  </section>
+
+  <script>
+    function checkAnswer() {
+      const answer = document.querySelector('input[name="q1"]:checked');
+      if (answer && answer.value === "Paris") {
+        document.getElementById("result").innerText = "Correct!";
+      } else {
+        document.getElementById("result").innerText = "Wrong. Try again.";
+      }
+    }
+
+    const images = [
+      "https://apexplanet.in/wp-content/uploads/2023/08/apspl9-1024x381.png.webp",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSwCuapB55DS-QviqyQZ7XmfnEhs9zQVMRGQ&s",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScFMoo-pRUoYkCBx7SsPmi_LKfvZmRsQr4lQ&s"
+    ];
+    let index = 0;
+
+    function nextImage() {
+      index = (index + 1) % images.length;
+      document.getElementById("carousel").src = images[index];
+    }
+
+    function getJoke() {
+      fetch("https://official-joke-api.appspot.com/random_joke")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("jokeText").innerText = `${data.setup} — ${data.punchline}`;
+        })
+        .catch(() => {
+          document.getElementById("jokeText").innerText = "Error fetching joke.";
+        });
+    }
+  </script>
+
+</body>
+</html>
